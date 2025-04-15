@@ -40,11 +40,12 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ releases }) => {
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const chartRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [selectedYear, setSelectedYear] = useState<string>("2025");
 
   // Hardcoded current date as April 16, 2025
   const currentDate = useMemo(() => new Date('2025-04-16'), []);
-  const startYear = useMemo(() => new Date('2025-01-01'), []);
-  const endYear = useMemo(() => new Date('2025-12-31'), []);
+  const startYear = useMemo(() => new Date(`${selectedYear}-01-01`), [selectedYear]);
+  const endYear = useMemo(() => new Date(`${selectedYear}-12-31`), [selectedYear]);
 
   // Check if we're on mobile
   useEffect(() => {
@@ -156,7 +157,8 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ releases }) => {
     <div className="timeline-container">
       <div className="timeline-header">
         <div className="year-selector">
-          <select value="2025" disabled>
+          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+            <option value="2024" disabled>2024</option>
             <option value="2025">2025</option>
           </select>
         </div>

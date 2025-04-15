@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import './Metrics.css';
 
 const ProductPosture: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
+  
+  // Check if we're on mobile or small screen
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 480);
+      setIsSmallScreen(width <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const radarOptions = {
     legend: {
       data: ['Apollo', 'Org Benchmark'],
-      bottom: -5,
+      bottom: isMobile ? 0 : -5,
       icon: 'circle',
-      itemWidth: 8,
-      itemHeight: 8,
+      itemWidth: isMobile ? 6 : 8,
+      itemHeight: isMobile ? 6 : 8,
       textStyle: {
         color: '#666',
-        fontSize: 12
+        fontSize: isMobile ? 10 : 12
       }
     },
     radar: {
@@ -24,13 +39,13 @@ const ProductPosture: React.FC = () => {
         { name: 'Reliability', max: 100 },
         { name: 'Audit', max: 100 }
       ],
-      radius: '70%',
+      radius: isMobile ? '55%' : isSmallScreen ? '65%' : '70%',
       center: ['50%', '50%'],
-      splitNumber: 4,
+      splitNumber: isMobile ? 3 : 4,
       axisName: {
         color: '#666',
-        fontSize: 13,
-        padding: [0, 15]
+        fontSize: isMobile ? 11 : 13,
+        padding: isMobile ? [0, 10] : [0, 15]
       },
       splitArea: {
         areaStyle: {
@@ -55,9 +70,9 @@ const ProductPosture: React.FC = () => {
         value: [98, 92, 88, 83, 58, 87],
         name: 'Apollo',
         symbol: 'circle',
-        symbolSize: 8,
+        symbolSize: isMobile ? 6 : 8,
         lineStyle: {
-          width: 3,
+          width: isMobile ? 2 : 3,
           color: '#069494'
         },
         areaStyle: {
@@ -83,9 +98,9 @@ const ProductPosture: React.FC = () => {
         value: [85, 80, 100, 87, 93, 90],
         name: 'Org Benchmark',
         symbol: 'circle',
-        symbolSize: 8,
+        symbolSize: isMobile ? 6 : 8,
         lineStyle: {
-          width: 3,
+          width: isMobile ? 2 : 3,
           color: '#F97316'
         },
         areaStyle: {
@@ -111,12 +126,18 @@ const ProductPosture: React.FC = () => {
     }]
   };
 
+  const getChartHeight = () => {
+    if (isMobile) return '240px';
+    if (isSmallScreen) return '270px';
+    return '300px';
+  };
+
   return (
     <div className="metric-card product-posture">
       <h3>Product Posture</h3>
       <ReactECharts 
         option={radarOptions} 
-        style={{ height: '300px' }}
+        style={{ height: getChartHeight(), width: '100%' }}
       />
       <div className="metric-trend positive">
       </div>

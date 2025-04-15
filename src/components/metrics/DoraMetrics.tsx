@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import './Metrics.css';
 
 const DoraMetrics: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isTablet, setIsTablet] = useState(window.innerWidth <= 768 && window.innerWidth > 480);
+  
+  // Add responsive behavior
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 480);
+      setIsTablet(width <= 768 && width > 480);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const deploymentOptions = {
-    grid: { top: 5, right: 5, bottom: 20, left: 30 },
+    grid: { 
+      top: 5, 
+      right: 5, 
+      bottom: 20, 
+      left: 30 
+    },
     xAxis: {
       type: 'category',
       data: ['Jan', 'Feb', 'Mar', 'Apr'],
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
       splitLine: { lineStyle: { color: '#f0f0f0' } },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     series: [{
       data: [4, 5, 2, 3],
@@ -27,19 +47,24 @@ const DoraMetrics: React.FC = () => {
   };
 
   const leadTimeOptions = {
-    grid: { top: 5, right: 5, bottom: 20, left: 30 },
+    grid: { 
+      top: 5, 
+      right: 5, 
+      bottom: 20, 
+      left: 30 
+    },
     xAxis: {
       type: 'category',
       data: ['Jan', 'Feb', 'Mar', 'Apr'],
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
       splitLine: { lineStyle: { color: '#f0f0f0' } },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     series: [{
       data: [25.4, 52.1, 21.6, 26.3],
@@ -62,19 +87,24 @@ const DoraMetrics: React.FC = () => {
   };
 
   const failureRateOptions = {
-    grid: { top: 5, right: 5, bottom: 20, left: 30 },
+    grid: { 
+      top: 5, 
+      right: 5, 
+      bottom: 20, 
+      left: 30 
+    },
     xAxis: {
       type: 'category',
       data: ['Jan', 'Feb', 'Mar', 'Apr'],
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
       splitLine: { lineStyle: { color: '#f0f0f0' } },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     series: [{
       data: [25, 28, 32, 28],
@@ -97,19 +127,24 @@ const DoraMetrics: React.FC = () => {
   };
 
   const mttrOptions = {
-    grid: { top: 5, right: 5, bottom: 20, left: 30 },
+    grid: { 
+      top: 5, 
+      right: 5, 
+      bottom: 20, 
+      left: 30 
+    },
     xAxis: {
       type: 'category',
       data: ['Jan', 'Feb', 'Mar', 'Apr'],
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
       splitLine: { lineStyle: { color: '#f0f0f0' } },
-      axisLabel: { fontSize: 10 }
+      axisLabel: { fontSize: isMobile ? 9 : 10 }
     },
     series: [{
       data: [12, 11, 9, 10],
@@ -131,6 +166,12 @@ const DoraMetrics: React.FC = () => {
     }]
   };
 
+  const getChartHeight = () => {
+    if (isMobile) return '80px';
+    if (isTablet) return '90px';
+    return '100px';
+  };
+
   return (
     <div className="metric-card dora-metrics">
       <h3>DORA Metrics</h3>
@@ -143,7 +184,10 @@ const DoraMetrics: React.FC = () => {
               <div className="metric-unit">/month</div>
             </div>
           </div>
-          <ReactECharts option={deploymentOptions} style={{ height: '100px' }} />
+          <ReactECharts 
+            option={deploymentOptions} 
+            style={{ height: getChartHeight() }} 
+          />
         </div>
 
         <div className="dora-item">
@@ -154,7 +198,10 @@ const DoraMetrics: React.FC = () => {
               <div className="metric-unit">hours</div>
             </div>
           </div>
-          <ReactECharts option={leadTimeOptions} style={{ height: '100px' }} />
+          <ReactECharts 
+            option={leadTimeOptions} 
+            style={{ height: getChartHeight() }} 
+          />
         </div>
 
         <div className="dora-item">
@@ -165,7 +212,10 @@ const DoraMetrics: React.FC = () => {
               <div className="metric-unit">percent</div>
             </div>
           </div>
-          <ReactECharts option={failureRateOptions} style={{ height: '100px' }} />
+          <ReactECharts 
+            option={failureRateOptions} 
+            style={{ height: getChartHeight() }} 
+          />
         </div>
 
         <div className="dora-item">
@@ -176,7 +226,10 @@ const DoraMetrics: React.FC = () => {
               <div className="metric-unit">days</div>
             </div>
           </div>
-          <ReactECharts option={mttrOptions} style={{ height: '100px' }} />
+          <ReactECharts 
+            option={mttrOptions} 
+            style={{ height: getChartHeight() }} 
+          />
         </div>
       </div>
     </div>

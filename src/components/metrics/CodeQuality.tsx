@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import './Metrics.css';
 
 const CodeQuality: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1400);
+
+  // Check if we're on mobile or large screen
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 480);
+      setIsLargeScreen(width >= 1400);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const gaugeOptions = {
     series: [{
       type: 'gauge',
       startAngle: 180,
       endAngle: 0,
-      center: ['50%', '75%'],
-      radius: '90%',
+      center: ['50%', isMobile ? '70%' : '75%'],
+      radius: isMobile ? '85%' : isLargeScreen ? '95%' : '90%',
       min: 0,
       max: 100,
-      splitNumber: 8,
+      splitNumber: isMobile ? 5 : 8,
       axisLine: {
         lineStyle: {
-          width: 6,
+          width: isMobile ? 4 : isLargeScreen ? 8 : 6,
           color: [
             [0.6, '#FF6B6B'],
             [0.8, '#F97316'],
@@ -25,8 +40,8 @@ const CodeQuality: React.FC = () => {
       },
       pointer: {
         icon: 'path://M2.9,0.7L9,6.1L15.1,0.7',
-        length: '55%',
-        width: 8,
+        length: isMobile ? '50%' : '55%',
+        width: isMobile ? 6 : isLargeScreen ? 10 : 8,
         offsetCenter: [0, '2%'],
         itemStyle: {
           color: '#069494',
@@ -38,7 +53,7 @@ const CodeQuality: React.FC = () => {
       },
       anchor: {
         show: true,
-        size: 5,
+        size: isMobile ? 4 : isLargeScreen ? 6 : 5,
         showAbove: true,
         itemStyle: {
           color: '#069494',
@@ -49,23 +64,23 @@ const CodeQuality: React.FC = () => {
         }
       },
       axisTick: {
-        length: 12,
+        length: isMobile ? 8 : isLargeScreen ? 15 : 12,
         lineStyle: {
           color: 'inherit',
-          width: 2
+          width: isMobile ? 1 : 2
         }
       },
       splitLine: {
-        length: 20,
+        length: isMobile ? 14 : isLargeScreen ? 25 : 20,
         lineStyle: {
           color: 'inherit',
-          width: 2
+          width: isMobile ? 1 : 2
         }
       },
       axisLabel: {
         color: '#666',
-        fontSize: 12,
-        distance: -60,
+        fontSize: isMobile ? 10 : isLargeScreen ? 14 : 12,
+        distance: isMobile ? -50 : isLargeScreen ? -65 : -60,
         formatter: function(value: number) {
           if (value === 100) {
             return '100%';
@@ -74,12 +89,12 @@ const CodeQuality: React.FC = () => {
         }
       },
       title: {
-        offsetCenter: [0, '-20%'],
-        fontSize: 20,
+        offsetCenter: [0, isMobile ? '-18%' : '-20%'],
+        fontSize: isMobile ? 16 : isLargeScreen ? 22 : 20,
         color: '#111827'
       },
       detail: {
-        fontSize: 30,
+        fontSize: isMobile ? 24 : isLargeScreen ? 36 : 30,
         offsetCenter: [0, '0%'],
         valueAnimation: true,
         formatter: function(value: number) {
@@ -94,12 +109,18 @@ const CodeQuality: React.FC = () => {
     }]
   };
 
+  const getChartHeight = () => {
+    if (isMobile) return '200px';
+    if (isLargeScreen) return '300px';
+    return '250px';
+  };
+
   return (
     <div className="metric-card">
       <h3>Code Quality</h3>
       <ReactECharts 
         option={gaugeOptions} 
-        style={{ height: '250px' }}
+        style={{ height: getChartHeight(), width: '100%' }}
       />
       <div className="metric-trend positive">
         <span>↑</span>

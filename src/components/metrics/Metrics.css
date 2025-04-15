@@ -7,12 +7,74 @@
   justify-content: start;
 }
 
+/* Additional rules for larger screens */
+@media (min-width: 1400px) {
+  .metrics-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    gap: 2rem;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0 auto;
+  }
+  
+  .metric-card {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  .metric-card.product-posture {
+    grid-column: span 2;
+    width: 100%;
+  }
+  
+  .dora-metrics {
+    max-width: 1200px;
+  }
+  
+  /* Fix chart positioning for larger screens */
+  .metric-card .echarts-for-react {
+    display: block;
+    width: 100% !important;
+  }
+  
+  /* Ensure chart containers properly fit their parent containers */
+  .metric-card .echarts-for-react > div,
+  .metric-card .echarts-for-react canvas {
+    width: 100% !important;
+  }
+}
+
+/* Medium size screens showing exactly 3 metric cards per row */
+@media (min-width: 1000px) and (max-width: 1399px) {
+  .metrics-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
+  .metric-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+}
+
 .metric-card {
   background: white;
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 300px;
+  transition: all 0.3s ease;
 }
 
 .metric-card.product-posture {
@@ -28,6 +90,7 @@
   color: #666;
   font-size: 1rem;
   margin-bottom: 1.5rem;
+  transition: font-size 0.3s ease, margin-bottom 0.3s ease;
 }
 
 .metric-value {
@@ -35,6 +98,7 @@
   font-weight: 600;
   color: #333;
   margin-bottom: 0.5rem;
+  transition: font-size 0.3s ease;
 }
 
 .metric-trend {
@@ -42,6 +106,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  transition: font-size 0.3s ease;
 }
 
 .metric-trend.positive {
@@ -69,6 +134,7 @@
   background-color: #f9fafb;
   border-radius: 8px;
   padding: 12px;
+  transition: padding 0.3s ease;
 }
 
 .dora-header {
@@ -76,12 +142,14 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  transition: margin-bottom 0.3s ease;
 }
 
 .dora-item .metric-label {
   font-size: 14px;
   color: #4b5563;
   margin-bottom: 4px;
+  transition: font-size 0.3s ease, margin-bottom 0.3s ease;
 }
 
 .dora-item .metric-value {
@@ -89,11 +157,13 @@
   font-weight: 600;
   color: #111827;
   margin-bottom: 0;
+  transition: font-size 0.3s ease;
 }
 
 .dora-item .metric-unit {
   font-size: 12px;
   color: #6b7280;
+  transition: font-size 0.3s ease;
 }
 
 .calendar-container {
@@ -107,6 +177,7 @@
   justify-content: center;
   gap: 1rem;
   margin-top: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .legend-item {
@@ -115,6 +186,7 @@
   gap: 0.5rem;
   font-size: 12px;
   color: #666;
+  transition: font-size 0.3s ease;
 }
 
 .legend-symbol {
@@ -137,6 +209,120 @@
   background-color: #F97316;
 }
 
+/* Technical Debt component styles */
+.debt-metrics {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  transition: margin-bottom 0.3s ease;
+}
+
+.debt-gauge, .debt-trend {
+  width: 100%;
+}
+
+.metric-details {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  transition: padding 0.3s ease, margin-top 0.3s ease;
+}
+
+.debt-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  transition: margin-bottom 0.3s ease, padding-bottom 0.3s ease;
+}
+
+.debt-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.debt-label {
+  font-size: 13px;
+  color: #666;
+  transition: font-size 0.3s ease;
+}
+
+.debt-value {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  transition: font-size 0.3s ease;
+}
+
+.debt-change {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: font-size 0.3s ease, padding 0.3s ease;
+}
+
+.debt-change.positive {
+  background-color: rgba(6, 148, 148, 0.1);
+  color: #069494;
+}
+
+.debt-change.negative {
+  background-color: rgba(228, 106, 118, 0.1);
+  color: #E46A76;
+}
+
+/* Test Coverage specific styles */
+.coverage-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  transition: margin-top 0.3s ease;
+}
+
+.trend-arrow {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: font-size 0.3s ease, margin-left 0.3s ease;
+}
+
+.trend-arrow.up {
+  color: #069494;
+}
+
+.trend-arrow.down {
+  color: #E46A76;
+}
+
+/* Responsive transition for all charts */
+.echarts-for-react {
+  transition: height 0.3s ease;
+}
+
+/* Additional responsive fixes for product posture and ops calendar */
+.metric-card.product-posture .echarts-for-react,
+.metric-card.ops-calendar .echarts-for-react {
+  display: block;
+  width: 100% !important;
+  overflow: visible;
+}
+
+.metric-card.product-posture .echarts-for-react > div,
+.metric-card.ops-calendar .echarts-for-react > div,
+.metric-card.product-posture .echarts-for-react canvas,
+.metric-card.ops-calendar .echarts-for-react canvas {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible;
+}
+
+/* Responsive Styles */
 @media (max-width: 1024px) {
   .metrics-container {
     grid-template-columns: repeat(auto-fill, 300px);
@@ -152,25 +338,302 @@
   .dora-metrics {
     max-width: 615px;
   }
+  
+  .debt-metrics {
+    flex-direction: column;
+  }
+  
+  .debt-gauge, .debt-trend {
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .metrics-container {
     grid-template-columns: 1fr;
     max-width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
   }
   
   .metric-card {
     width: 100%;
+    padding: 1.25rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
   
   .metric-card.product-posture {
     grid-column: 1 / -1;
     width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .metric-card.ops-calendar {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  /* Make sure charts don't overflow */
+  .metric-card .echarts-for-react {
+    width: 100% !important;
+    overflow: hidden;
+  }
+  
+  .metric-card .echarts-for-react div:first-child {
+    width: 100% !important;
   }
   
   .dora-metrics {
     width: 100%;
     max-width: 100%;
+    padding: 0.75rem;
+  }
+  
+  .dora-grid {
+    gap: 12px;
+  }
+  
+  .dora-item {
+    padding: 10px;
+  }
+  
+  .calendar-legend {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .metric-details {
+    padding: 10px;
+  }
+  
+  .debt-item {
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+  }
+}
+
+/* Add responsive styling for narrow mobile screens */
+@media (max-width: 480px) {
+  .metric-card {
+    padding: 1rem;
+  }
+  
+  .metric-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .metric-value {
+    font-size: 1.5rem;
+  }
+  
+  .metric-trend {
+    font-size: 0.75rem;
+  }
+  
+  /* DORA Metrics specific mobile styles */
+  .dora-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  
+  .dora-item .metric-label {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  
+  .dora-item .metric-value {
+    font-size: 16px;
+  }
+  
+  .dora-item .metric-unit {
+    font-size: 10px;
+  }
+  
+  .dora-metrics {
+    padding: 0.5rem;
+  }
+  
+  .dora-grid {
+    gap: 10px;
+  }
+  
+  .dora-item {
+    padding: 8px;
+  }
+  
+  .dora-item .echarts-for-react {
+    height: 80px !important;
+    margin-top: 4px;
+  }
+  
+  .dora-item .echarts-for-react div:first-child {
+    height: 80px !important;
+  }
+  
+  /* Other metrics components adjustments */
+  .calendar-container {
+    gap: 0.5rem;
+  }
+  
+  .calendar-legend {
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  
+  .legend-item {
+    font-size: 10px;
+  }
+  
+  .legend-symbol {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .metric-details {
+    padding: 10px;
+    margin-top: 8px;
+  }
+  
+  .debt-item {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+  
+  .debt-label {
+    font-size: 11px;
+  }
+  
+  .debt-value {
+    font-size: 12px;
+  }
+  
+  .debt-change {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+  
+  .coverage-indicator {
+    margin-top: 8px;
+  }
+  
+  .trend-arrow {
+    margin-left: 6px;
+    font-size: 12px;
+  }
+  
+  .metric-card.product-posture {
+    padding: 0.75rem;
+  }
+  
+  .metric-card.ops-calendar {
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+/* Additional fixes for very narrow screens */
+@media (max-width: 360px) {
+  .metric-card {
+    padding: 0.75rem;
+    overflow: hidden;
+  }
+  
+  .metric-card h3 {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .metric-value {
+    font-size: 1.25rem;
+  }
+  
+  /* Specific overrides for DORA metrics on very small screens */
+  .dora-grid {
+    gap: 8px;
+  }
+  
+  .dora-item {
+    padding: 6px;
+  }
+  
+  .dora-item .metric-label {
+    font-size: 11px;
+  }
+  
+  .dora-item .metric-value {
+    font-size: 14px;
+  }
+  
+  .dora-item .echarts-for-react {
+    height: 70px !important;
+  }
+  
+  .dora-item .echarts-for-react div:first-child {
+    height: 70px !important;
+  }
+  
+  .metric-trend {
+    font-size: 0.7rem;
+  }
+  
+  .calendar-legend {
+    gap: 0.5rem;
+  }
+  
+  .legend-item {
+    font-size: 9px;
+  }
+  
+  .legend-symbol {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .metric-details {
+    padding: 8px;
+    margin-top: 6px;
+  }
+  
+  .debt-item {
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+  }
+  
+  .debt-label {
+    font-size: 10px;
+  }
+  
+  .debt-value {
+    font-size: 11px;
+  }
+  
+  .debt-change {
+    font-size: 9px;
+    padding: 1px 3px;
+  }
+}
+
+/* Responsive styles for debt component specifically */
+@media (min-width: 768px) {
+  .debt-metrics {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .debt-gauge {
+    width: 40%;
+  }
+  
+  .debt-trend {
+    width: 60%;
   }
 } 

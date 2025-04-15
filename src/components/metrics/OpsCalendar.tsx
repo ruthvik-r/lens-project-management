@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import './Metrics.css';
 
@@ -11,6 +11,21 @@ interface TooltipParams {
 }
 
 const OpsCalendar: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
+  
+  // Check if we're on mobile or small screen
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 480);
+      setIsSmallScreen(width <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Generate data for April 2024
   const generateData = () => {
     const data: [string, number][] = [];
@@ -56,10 +71,10 @@ const OpsCalendar: React.FC = () => {
       }
     },
     calendar: {
-      top: 25,
-      left: 30,
-      right: 30,
-      cellSize: ['auto', 25],
+      top: isMobile ? 15 : 25,
+      left: isMobile ? 15 : 30,
+      right: isMobile ? 15 : 30,
+      cellSize: isMobile ? ['auto', 20] : ['auto', 25],
       range: '2024-04',
       itemStyle: {
         borderWidth: 1,
@@ -69,11 +84,13 @@ const OpsCalendar: React.FC = () => {
       dayLabel: {
         firstDay: 1,
         nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-        color: '#666'
+        color: '#666',
+        fontSize: isMobile ? 10 : 12
       },
       monthLabel: {
         show: true,
-        color: '#666'
+        color: '#666',
+        fontSize: isMobile ? 11 : 13
       },
       splitLine: {
         show: true,
@@ -87,7 +104,7 @@ const OpsCalendar: React.FC = () => {
       type: 'scatter',
       coordinateSystem: 'calendar',
       symbolSize: function(val: any) {
-        return val[1] === 0 ? 0 : 12;
+        return val[1] === 0 ? 0 : (isMobile ? 9 : 12);
       },
       symbol: function(val: any, params: any) {
         // Different symbols for different statuses
@@ -102,13 +119,19 @@ const OpsCalendar: React.FC = () => {
     }]
   };
 
+  const getChartHeight = () => {
+    if (isMobile) return '200px';
+    if (isSmallScreen) return '240px';
+    return '280px';
+  };
+
   return (
     <div className="metric-card ops-calendar">
       <h3>Ops Calendar</h3>
       <div className="calendar-container">
         <ReactECharts 
           option={chartOptions} 
-          style={{ height: '280px' }}
+          style={{ height: getChartHeight(), width: '100%' }}
         />
         <div className="calendar-legend">
           <div className="legend-item">

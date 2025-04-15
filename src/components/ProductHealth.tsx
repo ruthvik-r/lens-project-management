@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CodeQuality from './metrics/CodeQuality';
 import TestCoverage from './metrics/TestCoverage';
 import TechnicalDebt from './metrics/TechnicalDebt';
@@ -8,6 +8,8 @@ import OpsCalendar from './metrics/OpsCalendar';
 import './ProductHealth.css';
 
 const ProductHealth: React.FC = () => {
+  const [selectedProduct, setSelectedProduct] = useState<string>('apollo');
+
   return (
     <div>
       <div className="health-header">
@@ -19,7 +21,8 @@ const ProductHealth: React.FC = () => {
         <label htmlFor="product">Product</label>
         <select 
           id="product" 
-          value="apollo" 
+          value={selectedProduct}
+          onChange={(e) => setSelectedProduct(e.target.value)}
           className="product-select"
         >
           <option value="apollo">Apollo</option>

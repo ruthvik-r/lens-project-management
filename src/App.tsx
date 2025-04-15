@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
               <span className="insight-title">Release 25.2 Progress</span>
             </div>
             <div className="sprint-insights">
-              <div className="sprint-item completed">
+              <div className="sprint-item">
                 <h4>Sprint 25.2.1 (Completed)</h4>
                 <p>Sprint completed with all <span className="highlight">9</span> planned stories delivered</p>
               </div>
@@ -112,19 +112,17 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="app-container">
-        <div className="main-content">
-          <TopBar />
-          <div className="content-wrapper">
-            <MenuToggle isOpen={isMobileNavOpen} onToggle={toggleMobileNav} />
-            <SideNav className={isMobileNavOpen ? 'open' : ''} />
-            <main className="content">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/tracker" element={<Tracker />} />
-                <Route path="/health" element={<ProductHealth />} />
-              </Routes>
-            </main>
-          </div>
+        <TopBar />
+        <div className="content-wrapper">
+          <MenuToggle isOpen={isMobileNavOpen} onToggle={toggleMobileNav} />
+          <SideNav className={isMobileNavOpen ? 'open' : ''} />
+          <main className="content main-content-area">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/tracker" element={<Tracker />} />
+              <Route path="/health" element={<ProductHealth />} />
+            </Routes>
+          </main>
         </div>
       </div>
     </Router>

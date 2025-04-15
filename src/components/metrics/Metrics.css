@@ -55,7 +55,7 @@
 /* DORA Metrics specific styles */
 .dora-metrics {
   grid-column: 1 / -1;
-  width: 600px;
+  width: 100%;
   margin-top: 24px;
 }
 

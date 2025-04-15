@@ -20,12 +20,12 @@ const OpsCalendar: React.FC = () => {
       // Randomly assign statuses for demonstration
       // 0: Normal, 1: Deployment, 2: Downtime, 3: Unavailability
       let value: number;
-      if (i === 5 || i === 15 || i === 25) {
-        value = 1; // Deployments on 5th, 15th, 25th
-      } else if (i === 10) {
-        value = 2; // Downtime on 10th
+      if (i === 5 || i === 15 || i === 16) {
+        value = 1; // Deployments
+      } else if (i === 10 || i == 12 || i == 4) {
+        value = 2; // Downtime
       } else if (i === 7) {
-        value = 3; // Unavailability on 7th
+        value = 3; // Unavailability
       } else {
         value = 0; // Normal days
       }
@@ -92,7 +92,7 @@ const OpsCalendar: React.FC = () => {
       symbol: function(val: any, params: any) {
         // Different symbols for different statuses
         switch(params.data[1]) {
-          case 1: return 'path://M 100 100 L 300 100 L 200 300 z'; // Triangle for Deployment
+          case 1: return 'triangle'; // Triangle for Deployment
           case 2: return 'circle'; // Circle for Downtime
           case 3: return 'rect'; // Square for Unavailability
           default: return 'circle';

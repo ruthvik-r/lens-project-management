@@ -21,7 +21,7 @@ const DoraMetrics: React.FC = () => {
     series: [{
       data: [4, 5, 2, 3],
       type: 'bar',
-      barWidth: '40%',
+      barWidth: '60%',
       itemStyle: { color: '#069494' }
     }]
   };

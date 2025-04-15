@@ -1,0 +1,133 @@
+.timeline-container {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timeline-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.current-release-info {
+  background: #F97316;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.timeline-chart {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.current-release {
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.5));
+}
+
+/* Month markers */
+text {
+  font-family: Arial, sans-serif;
+}
+
+/* Release bars */
+rect {
+  transition: filter 0.3s ease;
+}
+
+rect:hover {
+  filter: brightness(1.1);
+}
+
+/* Current date indicator */
+line {
+  stroke-linecap: round;
+}
+
+circle {
+  filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.5));
+}
+
+/* Tooltip styles */
+.release-tooltip {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  min-width: 200px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.tooltip-content h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 16px;
+  text-align: center;
+}
+
+.progress-chart,
+.capacity-chart {
+  margin-bottom: 12px;
+}
+
+.progress-chart svg,
+.capacity-chart svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.tooltip-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e9ecef;
+}
+
+.tooltip-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tooltip-details strong {
+  color: #333;
+  margin-right: 8px;
+}
+
+.release-group {
+  cursor: pointer;
+}
+
+.year-selector {
+  margin-bottom: 1rem;
+}
+
+.year-selector select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  cursor: not-allowed;
+  opacity: 0.7;
+} 

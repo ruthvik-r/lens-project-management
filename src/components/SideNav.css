@@ -1,0 +1,46 @@
+.side-nav {
+  width: 250px;
+  background-color: white;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.side-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-nav li {
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  background-color: #FFA500;
+  color: white;
+}
+
+.nav-icon {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+}
+
+.nav-item:hover .nav-icon svg {
+  stroke: white;
+} 

@@ -1,0 +1,13 @@
+.welcome-message {
+  color: #F97316;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #F97316;
+  background-color: rgba(249, 115, 22, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 600;
+} 

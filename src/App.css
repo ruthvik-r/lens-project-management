@@ -364,13 +364,6 @@ body {
   margin: 8px 0;
 }
 
-.content {
-  flex: 1;
-  padding: 1rem;
-  overflow-y: auto;
-  height: 100%;
-}
-
 .home-content {
   padding: 1rem;
   width: 100%;

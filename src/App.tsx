@@ -4,6 +4,7 @@ import TopBar from './components/TopBar';
 import SideNav from './components/SideNav';
 import MenuToggle from './components/MenuToggle';
 import Tracker from './components/Tracker';
+import ProductHealth from './components/ProductHealth';
 import './App.css';
 
 const HomePage: React.FC = () => {
@@ -120,7 +121,7 @@ const App: React.FC = () => {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/tracker" element={<Tracker />} />
-                <Route path="/health" element={<div className="page-content">Health Content</div>} />
+                <Route path="/health" element={<ProductHealth />} />
               </Routes>
             </main>
           </div>

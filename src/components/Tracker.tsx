@@ -45,6 +45,7 @@ const releaseData: ReleaseData = require('../data/releaseData.json');
 const Tracker: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'release' | 'sprint'>('release');
   const [selectedSprint, setSelectedSprint] = useState<string>('25.2.2');
+  const [selectedProduct, setSelectedProduct] = useState<string>('apollo');
 
   const currentSprint = releaseData.releases
     .flatMap(release => release.sprints)
@@ -124,13 +125,26 @@ const Tracker: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
+      <div className="health-header">
+        <h2>Release Tracker</h2>
+        <p className="subtitle">Track and manage your releases and sprints in real-time</p>
+      </div>
+
       <div className="product-selector">
-        <label htmlFor="product">Product:</label>
-        <select id="product" value="apollo" disabled>
+        <label htmlFor="product">Product</label>
+        <select 
+          id="product" 
+          value={selectedProduct} 
+          onChange={(e) => setSelectedProduct(e.target.value)}
+        >
           <option value="apollo">Apollo</option>
+          <option value="artemis" disabled>Artemis</option>
+          <option value="athena" disabled>Athena</option>
+          <option value="hermes" disabled>Hermes</option>
         </select>
       </div>
+
       <div className="tracker-container">
         <div className="tab-container">
           <div className="tabs">
@@ -156,7 +170,7 @@ const Tracker: React.FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

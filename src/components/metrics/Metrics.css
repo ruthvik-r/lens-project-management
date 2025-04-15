@@ -1,0 +1,176 @@
+.metrics-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  justify-content: start;
+}
+
+.metric-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.metric-card.product-posture {
+  width: 615px;
+  grid-column-end: span 2;
+}
+
+.metric-card.ops-calendar {
+  width: 300px;
+}
+
+.metric-card h3 {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.metric-trend {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.metric-trend.positive {
+  color: #2e7d32;
+}
+
+.metric-trend.negative {
+  color: #d32f2f;
+}
+
+/* DORA Metrics specific styles */
+.dora-metrics {
+  grid-column: 1 / -1;
+  width: 600px;
+  margin-top: 24px;
+}
+
+.dora-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dora-item {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.dora-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dora-item .metric-label {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.dora-item .metric-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0;
+}
+
+.dora-item .metric-unit {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 12px;
+  color: #666;
+}
+
+.legend-symbol {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-symbol.deployment {
+  background-color: #069494;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.legend-symbol.downtime {
+  background-color: #dc2626;
+  border-radius: 50%;
+}
+
+.legend-symbol.unavailable {
+  background-color: #F97316;
+}
+
+@media (max-width: 1024px) {
+  .metrics-container {
+    grid-template-columns: repeat(auto-fill, 300px);
+    max-width: 615px;
+    justify-content: center;
+  }
+  
+  .metric-card.product-posture {
+    width: 100%;
+    max-width: 615px;
+  }
+  
+  .dora-metrics {
+    max-width: 615px;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-container {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  
+  .metric-card {
+    width: 100%;
+  }
+  
+  .metric-card.product-posture {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+  
+  .dora-metrics {
+    width: 100%;
+    max-width: 100%;
+  }
+} 

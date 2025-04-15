@@ -56,13 +56,18 @@
   flex: 1;
   min-height: 0;
   height: calc(100vh - 64px); /* Subtract TopBar height */
+  position: relative;
+  margin-top: 64px;
 }
 
 .content {
   flex: 1;
-  padding: 1rem;
+  padding: 1rem 0 1rem 2rem; /* Remove right padding */
   overflow-y: auto;
-  height: 100%;
+  margin-left: 250px; /* Match side-nav width */
+  width: calc(100% - 250px);
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
 
 .page-content {
@@ -119,14 +124,16 @@ body {
 }
 
 .home-content {
-  padding: 1rem;
+  padding: 1rem 0 1rem 0; /* Remove right padding to fix the gap */
   width: 100%;
+  max-width: 100%; /* Ensure content fills available space */
 }
 
 .welcome-message {
   color: #F97316;
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  padding-left: 1rem; /* Add consistent padding */
 }
 
 .summary-text {
@@ -134,7 +141,9 @@ body {
   font-size: 1.1rem;
   line-height: 1.6;
   width: 100%;
+  max-width: 800px;
   margin-bottom: 2rem;
+  padding-left: 1rem; /* Add consistent padding */
 }
 
 .section-title {
@@ -142,6 +151,18 @@ body {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
+  padding-left: 1rem; /* Add consistent padding */
+  margin-left: 0;
+}
+
+/* Home content section titles - directly apply to all section titles in home-content */
+.home-content .section-title {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  padding-left: 1rem; /* Consistent padding for all section titles */
+  margin-left: 0;
 }
 
 .status-card {
@@ -150,6 +171,8 @@ body {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ensure card spans full width */
+  box-sizing: border-box;
 }
 
 .status-content {
@@ -240,6 +263,10 @@ body {
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
+  padding-left: 0;
+  margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .product-icon {
@@ -295,6 +322,7 @@ body {
   display: flex;
   align-items: baseline;
   gap: 12px;
+  padding-left: 0; /* Ensure consistent alignment */
 }
 
 .role-indicator {
@@ -304,42 +332,43 @@ body {
 }
 
 .quick-glance-container {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .quick-stats-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
 .stat-card {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .stat-value {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 600;
-  color: #F97316;
+  margin-bottom: 0.5rem;
 }
 
 .highlight-box {
+  color: #F97316;
   background-color: rgba(249, 115, 22, 0.1);
-  padding: 1rem 1.5rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 8px;
-  line-height: 1;
+  font-weight: 600;
 }
 
 .stat-label {
   color: #666;
   font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Responsive breakpoints */
@@ -458,33 +487,85 @@ body {
   }
 }
 
-/* Handle SideNav on mobile */
-@media screen and (max-width: 767px) {
+/* Handle SideNav on mobile and small tablets */
+@media screen and (max-width: 800px) {
   .content-wrapper {
-    position: relative;
+    height: calc(100vh - 56px);
+    margin-top: 56px;
+    width: 100%;
   }
-
-  .side-nav {
-    position: fixed;
-    left: -250px;
-    top: 64px;
-    bottom: 0;
-    transition: left 0.3s ease;
-    z-index: 1000;
+  
+  .content {
+    margin-left: 0;
+    width: 100%;
+    padding: 0.5rem;
+    padding-bottom: 70px; /* Increase space for bottom nav */
   }
-
-  .side-nav.open {
-    left: 0;
+  
+  .main-content-area {
+    margin-left: 0;
+    width: 100%;
+    padding-bottom: 60px; /* Space for bottom nav */
   }
-
+  
   .menu-toggle {
-    display: block;
+    display: none; /* Hide on mobile */
+  }
+  
+  /* Mobile bottom nav specific adjustments */
+  .main-content-area {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  /* Reduce padding for better space usage */
+  .home-content {
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .status-card,
+  .release-info,
+  .product-performance,
+  .insight-item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
-@media screen and (min-width: 768px) {
+/* Only show side nav for larger screens */
+@media screen and (min-width: 801px) {
   .menu-toggle {
     display: none;
+  }
+  
+  .content-wrapper {
+    height: calc(100vh - 64px); /* Subtract TopBar height */
+    margin-top: 64px;
+  }
+  
+  .content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 1rem 0 1rem 2rem;
+  }
+}
+
+/* Additional fix for main content area margin */
+@media screen and (max-width: 800px) {
+  .main-content-area {
+    margin-left: 0;
+    margin-top: 0;
+    width: 100%;
+  }
+  
+  .content {
+    margin-left: 0;
+    width: 100%;
   }
 }
 
@@ -508,58 +589,84 @@ body {
 /* Handle landscape orientation */
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .content-wrapper {
-    height: auto;
-    min-height: calc(100vh - 64px);
+    height: calc(100vh - 48px);
+    margin-top: 48px;
   }
-
-  .quick-stats-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .stat-value {
-    font-size: 1.5rem;
+  
+  .content {
+    padding: 0.5rem;
   }
 }
 
 /* Menu toggle styles */
 .menu-toggle {
-  display: none;
-  background: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
   border: none;
   color: white;
-  padding: 8px;
   cursor: pointer;
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1001;
+  width: 48px;
+  height: 48px;
+  z-index: 20;
+  padding: 12px;
+  transition: all 0.2s ease-in-out;
+  display: none; /* Hide by default */
 }
 
 .menu-toggle:hover {
-  opacity: 0.9;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hide menu toggle for tablets and mobile since we have bottom nav */
+@media screen and (max-width: 800px) {
+  .menu-toggle {
+    display: none; /* Hide on mobile */
+  }
+}
+
+/* No need to show toggle on desktop either */
+@media screen and (min-width: 801px) {
+  .menu-toggle {
+    display: none;
+  }
 }
 
 /* Adjust spacing for section titles that are not inside cards */
 .home-content > .section-title {
   margin-bottom: 1.5rem;
+  padding-left: 1rem; /* Use same padding as other section titles */
+  margin-left: 0;
 }
 
 .insights-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  padding-left: 0;
+  padding-right: 0; 
+  width: 100%;
 }
 
 .insight-item {
   background-color: #f8f9fa;
   border-radius: 8px;
   padding: 1.25rem;
+  width: calc(100% - 2rem); /* Account for left and right margins */
+  box-sizing: border-box;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .insight-item.alert {
   background-color: rgba(249, 115, 22, 0.1);
   border-left: 4px solid #F97316;
+  margin-left: 1rem; /* Add left margin for spacing */
+  margin-right: 1rem;
+  padding-left: 1.25rem; /* Ensure consistent padding */
+  width: calc(100% - 2rem); /* Adjust width to account for margins */
+  box-sizing: border-box;
 }
 
 .insight-header {
@@ -617,7 +724,23 @@ body {
   }
 
   .insight-item {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    width: calc(100% - 1.5rem);
     padding: 1rem;
+  }
+
+  .insight-item.alert {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    width: calc(100% - 1.5rem);
+    padding-left: 1rem;
+  }
+
+  .status-card {
+    margin: 0 0.75rem 1rem 0.75rem;
+    padding: 1rem;
+    width: calc(100% - 1.5rem);
   }
 
   .sprint-item {
@@ -626,6 +749,388 @@ body {
 }
 
 .main-content-area {
-  margin-left: 250px;
-  margin-top: 64px;
+  margin-left: 0; /* Remove redundant margin */
+  margin-top: 0;
+}
+
+/* Enhanced responsive media queries */
+@media screen and (max-width: 991px) {
+  .content {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+  
+  .content {
+    padding: 0;
+    padding-bottom: 60px; /* Space for bottom nav */
+    width: 100%;
+    margin: 0;
+  }
+  
+  .home-content {
+    padding: 0.375rem;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .status-card,
+  .release-info,
+  .product-performance {
+    padding: 0.75rem;
+    border-radius: 6px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+  
+  .insight-item {
+    padding: 0.75rem;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+  
+  .content.nav-open {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Enhanced responsive home styles */
+@media screen and (max-width: 991px) {
+  .welcome-message {
+    font-size: 1.4rem;
+  }
+  
+  .summary-text {
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  .quick-stats-grid {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .home-content {
+    padding: 0.75rem;
+  }
+  
+  .welcome-message {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .summary-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .insights-container {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home-content {
+    padding: 0.5rem;
+  }
+  
+  .welcome-message {
+    font-size: 1.2rem;
+  }
+  
+  .summary-text {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .section-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.875rem;
+  }
+  
+  .quick-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .status-card {
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .quick-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .stat-card {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .highlight-box {
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+  
+  .quick-glance-container {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .quick-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .stat-card {
+    padding: 0.625rem 0.375rem;
+  }
+  
+  .stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .highlight-box {
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+  }
+  
+  .stat-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* Additional fix for main content area margin */
+@media screen and (max-width: 767px) {
+  .main-content-area {
+    margin-left: 0;
+    margin-top: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+  }
+  
+  .home-content {
+    padding: 1.5rem;
+    padding-left: 0;
+  }
+  
+  .health-header,
+  .status-card,
+  .product-selector {
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .content {
+    padding: 2rem;
+    padding-left: 1rem;
+  }
+  
+  .home-content {
+    padding: 2rem;
+    padding-left: 0;
+  }
+}
+
+/* Mobile optimization for content area */
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem 0.5rem; /* Even padding on both sides */
+  }
+  
+  .content.nav-open {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+  }
+  
+  .home-content {
+    padding: 0.5rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .content {
+    padding: 0.5rem;
+  }
+  
+  .home-content {
+    padding: 0.25rem;
+  }
+}
+
+/* Fix product title alignment */
+.product-header .title-container {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Fix status card padding for mobile */
+@media (max-width: 768px) {
+  /* All section titles in home content get same padding */
+  .home-content .section-title {
+    padding-left: 0.75rem;
+    margin-left: 0;
+  }
+  
+  .status-card {
+    margin: 0 0.5rem 1rem 0.5rem;
+    padding: 1rem;
+    width: calc(100% - 1rem);
+  }
+  
+  .product-header {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 0.75rem; /* Add padding to product header */
+  }
+  
+  .welcome-message,
+  .summary-text {
+    padding-left: 0.75rem; /* Match with section titles */
+  }
+  
+  .insight-item, 
+  .insight-item.alert {
+    margin: 0 0.5rem 0.75rem 0.5rem;
+    width: calc(100% - 1rem);
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .section-title,
+  .home-content .section-title {
+    padding-left: 0.5rem; /* Consistent smaller padding */
+  }
+  
+  .welcome-message,
+  .summary-text {
+    padding-left: 0.5rem; /* Match with section titles */
+  }
+  
+  .product-header {
+    padding-left: 0.5rem; /* Match with section titles */
+  }
+  
+  .insight-item.alert {
+    margin-left: 0.375rem;
+    margin-right: 0.375rem;
+    width: calc(100% - 0.75rem);
+  }
+}
+
+/* Adjust media queries for section title consistency */
+@media (max-width: 768px) {
+  .section-title,
+  .home-content .section-title {
+    padding-left: 0.75rem; /* Smaller padding on mobile but still present */
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title,
+  .home-content .section-title {
+    padding-left: 0.5rem; /* Even smaller but still visible padding on small screens */
+    margin-left: 0;
+  }
+}
+
+/* Target both Quick Peek and Your Projects titles specifically */
+.quick-glance-container > .section-title,
+.home-content > .section-title {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  padding-left: 1rem !important; /* Force consistent padding */
+  margin-left: 0 !important;
+}
+
+/* Fix their mobile styling too */
+@media (max-width: 768px) {
+  .quick-glance-container > .section-title,
+  .home-content > .section-title {
+    padding-left: 0.75rem !important;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-glance-container > .section-title,
+  .home-content > .section-title {
+    padding-left: 0.5rem !important;
+    font-size: 1.1rem;
+  }
+}
+
+/* Specific fix for exactly 768px width screens */
+@media screen and (width: 768px) {
+  .content {
+    margin-left: 0;
+    width: 100%;
+    padding: 0.5rem;
+    padding-bottom: 70px; /* Space for bottom nav */
+  }
+  
+  .content-wrapper {
+    height: calc(100vh - 56px);
+    margin-top: 56px;
+  }
+  
+  .side-nav {
+    top: auto;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+  }
+  
+  .main-content-area {
+    padding-bottom: 60px;
+  }
+  
+  .menu-toggle {
+    display: none; /* Ensure the menu toggle is hidden */
+  }
 }

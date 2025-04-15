@@ -1,5 +1,6 @@
 .health-header {
   padding: 2rem 2rem 0;
+  padding-left: 0;
 }
 
 .health-header h2 {
@@ -22,6 +23,7 @@
   align-items: center;
   gap: 12px;
   margin: 0 2rem 1.5rem;
+  margin-left: 0;
 }
 
 .product-selector label {
@@ -57,6 +59,7 @@
 
 .health-content {
   padding: 0 2rem;
+  padding-left: 0;
 }
 
 .health-metrics {
@@ -65,8 +68,87 @@
   gap: 1.5rem;
 }
 
+/* Mobile optimization */
 @media (max-width: 768px) {
   .health-metrics {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .health-header {
+    padding: 1rem 0.5rem 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .health-content {
+    padding: 0 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .product-selector {
+    margin: 0 0.5rem 1rem;
+    width: calc(100% - 1rem);
+    box-sizing: border-box;
+  }
+}
+
+/* Small mobile optimization */
+@media (max-width: 480px) {
+  .health-header {
+    padding: 0.75rem 0.375rem 0;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .health-header h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  
+  .health-header .subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .health-content {
+    padding: 0 0.375rem;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .product-selector {
+    margin: 0 0.375rem 0.75rem;
+    gap: 8px;
+    width: calc(100% - 0.75rem);
+  }
+  
+  .product-selector label {
+    font-size: 14px;
+  }
+  
+  .product-select {
+    font-size: 13px;
+    min-width: 140px;
+    padding: 6px 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .health-header {
+    padding-left: 0;
+  }
+  
+  .health-content {
+    padding-left: 0;
+  }
+  
+  .product-selector {
+    margin-left: 0;
   }
 } 

@@ -6,7 +6,9 @@
   position: fixed; 
   top: 64px; 
   height: calc(100vh - 64px); 
-  overflow-y: auto; 
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out, width 0.3s ease;
+  z-index: 9;
 }
 
 .side-nav ul {
@@ -29,8 +31,18 @@
 }
 
 .nav-item:hover {
-  background-color: #FFA500;
+  background-color: #F97316;
   color: white;
+}
+
+/* Special hover treatment for active items */
+.nav-item.active:hover {
+  background-color: #F97316;
+  color: #069494; /* Teal color */
+}
+
+.nav-item.active:hover .nav-icon svg {
+  stroke: #069494; /* Teal color for icon when active item is hovered */
 }
 
 .nav-icon {
@@ -47,4 +59,105 @@
 
 .nav-item:hover .nav-icon svg {
   stroke: white;
+}
+
+.nav-item.active {
+  color: #F97316;
+  font-weight: 500;
+}
+
+.nav-item.active .nav-icon svg {
+  stroke: #F97316;
+}
+
+/* Bottom navigation for mobile and tablets up to 800px */
+@media screen and (max-width: 800px) {
+  .side-nav {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100%;
+    transform: none;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    overflow-y: initial;
+    z-index: 100;
+  }
+  
+  .side-nav ul {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .side-nav li {
+    flex: 1;
+  }
+  
+  .nav-item {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    font-size: 12px;
+    gap: 4px;
+  }
+  
+  .nav-icon {
+    margin-right: 0;
+    margin-bottom: 4px;
+  }
+  
+  .nav-item.active {
+    color: #F97316;
+    background-color: transparent;
+  }
+  
+  .nav-item:hover {
+    background-color: transparent;
+    color: #F97316;
+  }
+  
+  .nav-item:hover .nav-icon svg {
+    stroke: #F97316;
+  }
+  
+  .nav-item.active:hover {
+    background-color: transparent;
+    color: #069494; /* Teal color */
+  }
+  
+  .nav-item.active:hover .nav-icon svg {
+    stroke: #069494; /* Teal color for icon */
+  }
+}
+
+/* Responsive styles for larger tablets and desktops */
+@media screen and (min-width: 801px) and (max-width: 991px) {
+  .side-nav {
+    width: 220px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav-item {
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .nav-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .side-nav {
+    overflow-y: scroll;
+  }
+  
+  .nav-item {
+    padding: 0.75rem 1rem;
+  }
 } 

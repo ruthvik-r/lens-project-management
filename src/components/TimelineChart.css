@@ -5,6 +5,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .timeline-header {
@@ -12,6 +15,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .timeline-header h3 {
@@ -32,7 +37,13 @@
 .timeline-chart {
   position: relative;
   width: 100%;
+  min-height: 250px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-chart svg {
+  min-width: 900px;
 }
 
 .current-release {
@@ -71,6 +82,11 @@ circle {
   min-width: 200px;
   z-index: 1000;
   pointer-events: none;
+}
+
+/* Mobile tooltip overlay */
+.mobile-tooltip-overlay {
+  display: none;
 }
 
 .tooltip-content h4 {
@@ -130,4 +146,121 @@ circle {
   color: #333;
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .timeline-container {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .timeline-chart {
+    min-height: 350px;
+    padding-bottom: 15px;
+  }
+  
+  .timeline-chart svg {
+    min-width: 1000px;
+  }
+  
+  .current-release-info {
+    padding: 4px 8px;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Add horizontal scroll indicator */
+  .timeline-container::after {
+    content: "← Scroll →";
+    display: block;
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+    margin-top: 8px;
+    opacity: 0.7;
+  }
+  
+  .release-tooltip {
+    pointer-events: auto; /* Enable interaction on mobile */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-tooltip-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1900;
+    touch-action: none;
+  }
+  
+  .tooltip-content h4 {
+    font-size: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .release-tooltip .close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+    padding: 4px;
+    display: block;
+  }
+
+  .release-group rect {
+    height: 40px !important; /* Make release bars taller on mobile */
+  }
+  
+  .release-group text {
+    font-size: 14px !important; /* Increase font size on mobile */
+    font-weight: 600 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-container {
+    padding: 10px;
+  }
+  
+  .timeline-chart {
+    min-height: 400px;
+  }
+  
+  .timeline-chart svg {
+    min-width: 1200px; /* Make chart wider on small screens for better legibility */
+  }
+  
+  .release-tooltip {
+    min-width: 160px;
+    max-width: 80vw;
+  }
+  
+  .tooltip-content h4 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .year-selector select {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
 } 

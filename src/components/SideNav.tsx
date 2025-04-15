@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './SideNav.css';
 
 interface SideNavProps {
@@ -7,11 +7,14 @@ interface SideNavProps {
 }
 
 const SideNav: React.FC<SideNavProps> = ({ className = '' }) => {
+  const location = useLocation();
+  const { pathname } = location;
+
   return (
     <nav className={`side-nav ${className}`}>
       <ul>
         <li>
-          <Link to="/" className="nav-item">
+          <Link to="/" className={`nav-item ${pathname === '/' ? 'active' : ''}`}>
             <span className="nav-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -22,7 +25,7 @@ const SideNav: React.FC<SideNavProps> = ({ className = '' }) => {
           </Link>
         </li>
         <li>
-          <Link to="/tracker" className="nav-item">
+          <Link to="/tracker" className={`nav-item ${pathname === '/tracker' ? 'active' : ''}`}>
             <span className="nav-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -36,13 +39,13 @@ const SideNav: React.FC<SideNavProps> = ({ className = '' }) => {
           </Link>
         </li>
         <li>
-          <Link to="/health" className="nav-item">
+          <Link to="/health" className={`nav-item ${pathname === '/health' ? 'active' : ''}`}>
             <span className="nav-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
               </svg>
             </span>
-            <span>Product Health</span>
+            <span>Health</span>
           </Link>
         </li>
       </ul>

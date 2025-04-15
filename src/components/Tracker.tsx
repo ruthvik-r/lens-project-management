@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import TimelineChart from './TimelineChart';
 import './Tracker.css';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
@@ -54,6 +54,7 @@ const StoryCard: React.FC<{ item: Story }> = ({ item }) => {
   });
 
   const ref = React.useRef<HTMLDivElement>(null);
+  const isMobile = window.innerWidth <= 768;
 
   React.useEffect(() => {
     drag(ref);
@@ -69,9 +70,18 @@ const StoryCard: React.FC<{ item: Story }> = ({ item }) => {
         <h4>{item.id}. {item.title}</h4>
         <span className={`item-type ${item.type}`}>{item.type.toUpperCase()}</span>
       </div>
-      <p>Priority: {item.priority}</p>
+      <p className="priority-tag">
+        <span className={`priority priority-${item.priority.toLowerCase()}`}>
+          {item.priority}
+        </span>
+      </p>
       <div className="card-footer">
-        <span className="assignee">Assigned to: {item.assignee}</span>
+        <span className="assignee">
+          {isMobile ? 
+            <span className="assignee-label">👤 {item.assignee}</span> : 
+            <span className="assignee-label">Assigned to: {item.assignee}</span>
+          }
+        </span>
         {item.type === 'story' && <span className="story-points">{item.storyPoints} points</span>}
       </div>
     </div>
@@ -83,6 +93,17 @@ const Tracker: React.FC = () => {
   const [selectedSprint, setSelectedSprint] = useState<string>('25.2.2');
   const [selectedProduct, setSelectedProduct] = useState<string>('apollo');
   const [stories, setStories] = useState<Story[]>([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Check if we're on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const currentSprint = releaseData.releases
     .flatMap(release => release.sprints)
@@ -126,7 +147,6 @@ const Tracker: React.FC = () => {
       return acc;
     }, {} as Record<Status, Story[]>);
 
-
     const Column: React.FC<{ title: Status; items: Story[] }> = ({ title, items }) => {
       const [, drop] = useDrop({
         accept: 'CARD',
@@ -143,11 +163,14 @@ const Tracker: React.FC = () => {
 
       return (
         <div ref={ref} className="kanban-column">
-          <h3>{title}</h3>
+          <h3>{title} {isMobile && items.length > 0 && <span className="item-count">({items.length})</span>}</h3>
           <div className="kanban-cards">
             {items.map(item => (
               <StoryCard key={item.id} item={item} />
             ))}
+            {items.length === 0 && (
+              <div className="empty-column-message">No items</div>
+            )}
           </div>
         </div>
       );
@@ -179,6 +202,14 @@ const Tracker: React.FC = () => {
               ))}
             </select>
           </div>
+          {isMobile && (
+            <div className="sprint-summary">
+              <div className="sprint-stats">
+                <span>Stories: {stories.filter(s => s.type === 'story').length}</span>
+                <span>Bugs: {stories.filter(s => s.type === 'bug').length}</span>
+              </div>
+            </div>
+          )}
         </div>
         <div className="kanban-container">
           {columns.map(column => (

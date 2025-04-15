@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import TopBar from './components/TopBar';
 import SideNav from './components/SideNav';
 import MenuToggle from './components/MenuToggle';
@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
       </p>
 
       <div className="quick-glance-container">
-        <h3 className="section-title">Quick Glance</h3>
+        <h3 className="section-title">Quick Peek</h3>
         <div className="quick-stats-grid">
           <div className="stat-card">
             <div className="stat-value highlight-box">25.2</div>
@@ -88,7 +88,7 @@ const HomePage: React.FC = () => {
                 <p>Ranked <span className="highlight">2nd</span></p>
               </div>
               <div className="sprint-item">
-                <h4>Organization Standards</h4>
+                <h4>Organization Compliance</h4>
                 <p>Ranked <span className="highlight">5th</span></p>
               </div>
             </div>
@@ -116,11 +116,12 @@ const App: React.FC = () => {
         <div className="content-wrapper">
           <MenuToggle isOpen={isMobileNavOpen} onToggle={toggleMobileNav} />
           <SideNav className={isMobileNavOpen ? 'open' : ''} />
-          <main className="content main-content-area">
+          <main className={`content main-content-area ${isMobileNavOpen ? 'nav-open' : ''}`}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/health" element={<ProductHealth />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
         </div>

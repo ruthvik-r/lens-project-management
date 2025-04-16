@@ -18,19 +18,26 @@ const CodeQuality: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Get responsive values based on screen size
+  const getResponsiveValue = (mobileValue: number | string, regularValue: number | string, largeValue: number | string) => {
+    if (isMobile) return mobileValue;
+    if (isLargeScreen) return largeValue;
+    return regularValue;
+  };
+
   const gaugeOptions = {
     series: [{
       type: 'gauge',
       startAngle: 180,
       endAngle: 0,
       center: ['50%', isMobile ? '70%' : '75%'],
-      radius: isMobile ? '85%' : isLargeScreen ? '95%' : '90%',
+      radius: getResponsiveValue('85%', '90%', '95%'),
       min: 0,
       max: 100,
       splitNumber: isMobile ? 5 : 8,
       axisLine: {
         lineStyle: {
-          width: isMobile ? 4 : isLargeScreen ? 8 : 6,
+          width: getResponsiveValue(4, 6, 8),
           color: [
             [0.6, '#FF6B6B'],
             [0.8, '#F97316'],
@@ -40,7 +47,7 @@ const CodeQuality: React.FC = () => {
       },
       pointer: {
         length: isMobile ? '60%' : '65%',
-        width: isMobile ? 4 : isLargeScreen ? 6 : 5,
+        width: getResponsiveValue(4, 5, 6),
         offsetCenter: [0, '0%'],
         itemStyle: {
           color: '#069494'
@@ -49,20 +56,20 @@ const CodeQuality: React.FC = () => {
       anchor: {
         show: true,
         showAbove: true,
-        size: isMobile ? 6 : isLargeScreen ? 10 : 8,
+        size: getResponsiveValue(6, 8, 10),
         itemStyle: {
           color: '#069494'
         }
       },
       axisTick: {
-        length: isMobile ? 8 : isLargeScreen ? 15 : 12,
+        length: getResponsiveValue(8, 12, 15),
         lineStyle: {
           color: 'inherit',
           width: isMobile ? 1 : 2
         }
       },
       splitLine: {
-        length: isMobile ? 14 : isLargeScreen ? 25 : 20,
+        length: getResponsiveValue(14, 20, 25),
         lineStyle: {
           color: 'inherit',
           width: isMobile ? 1 : 2
@@ -70,8 +77,8 @@ const CodeQuality: React.FC = () => {
       },
       axisLabel: {
         color: '#666',
-        fontSize: isMobile ? 10 : isLargeScreen ? 14 : 12,
-        distance: isMobile ? -50 : isLargeScreen ? -65 : -60,
+        fontSize: getResponsiveValue(10, 12, 14),
+        distance: getResponsiveValue(-50, -60, -65),
         formatter: function(value: number) {
           if (value === 100) {
             return '100%';
@@ -81,11 +88,11 @@ const CodeQuality: React.FC = () => {
       },
       title: {
         offsetCenter: [0, isMobile ? '-18%' : '-20%'],
-        fontSize: isMobile ? 16 : isLargeScreen ? 22 : 20,
+        fontSize: getResponsiveValue(16, 20, 22),
         color: '#111827'
       },
       detail: {
-        fontSize: isMobile ? 24 : isLargeScreen ? 36 : 30,
+        fontSize: getResponsiveValue(24, 30, 36),
         offsetCenter: [0, '30%'],
         valueAnimation: true,
         formatter: function(value: number) {

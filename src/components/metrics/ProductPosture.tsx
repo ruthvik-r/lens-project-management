@@ -18,6 +18,13 @@ const ProductPosture: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Get responsive values based on screen size
+  const getResponsiveValue = (mobileValue: number | string, smallScreenValue: number | string, regularValue: number | string) => {
+    if (isMobile) return mobileValue;
+    if (isSmallScreen) return smallScreenValue;
+    return regularValue;
+  };
+
   const radarOptions = {
     legend: {
       data: ['Apollo', 'Org Benchmark'],
@@ -39,7 +46,7 @@ const ProductPosture: React.FC = () => {
         { name: 'Reliability', max: 100 },
         { name: 'Audit', max: 100 }
       ],
-      radius: isMobile ? '55%' : isSmallScreen ? '65%' : '70%',
+      radius: getResponsiveValue('55%', '65%', '70%'),
       center: ['50%', '50%'],
       splitNumber: isMobile ? 3 : 4,
       axisName: {

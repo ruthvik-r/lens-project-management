@@ -18,6 +18,13 @@ const TestCoverage: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Get responsive values based on screen size
+  const getResponsiveValue = (mobileValue: number | string, regularValue: number | string, largeValue: number | string) => {
+    if (isMobile) return mobileValue;
+    if (isLargeScreen) return largeValue;
+    return regularValue;
+  };
+
   const gaugeOptions = {
     series: [{
       type: 'gauge',
@@ -69,7 +76,7 @@ const TestCoverage: React.FC = () => {
       detail: {
         offsetCenter: [0, 0],
         valueAnimation: true,
-        fontSize: isMobile ? 28 : isLargeScreen ? 40 : 36,
+        fontSize: getResponsiveValue(28, 36, 40),
         fontWeight: 'bold',
         formatter: '{value}%',
         color: '#111827'

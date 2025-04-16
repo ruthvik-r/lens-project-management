@@ -11,7 +11,7 @@ const ProductHealth: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<string>('apollo');
 
   return (
-    <div>
+    <div className="product-health-container">
       <div className="health-header">
         <h2>Product Health Dashboard</h2>
         <p className="subtitle">Monitor and track the overall health of your product</p>

@@ -49,18 +49,19 @@ const OpsCalendar: React.FC = () => {
     return data;
   };
 
+  // Create dataset for day numbers
+  const dateLabels = () => {
+    const data: [string, number][] = [];
+    for (let i = 1; i <= 30; i++) {
+      const date = `2024-04-${i.toString().padStart(2, '0')}`;
+      data.push([date, i]); // Value is the date number
+    }
+    return data;
+  };
+
   const chartOptions = {
     tooltip: {
-      formatter: function(params: TooltipParams) {
-        const status: Status = {
-          0: 'Normal',
-          1: 'Deployment',
-          2: 'Downtime',
-          3: 'Unavailable'
-        };
-        const date = new Date(params.data[0]);
-        return `${date.getDate()} April: ${status[params.data[1]]}`;
-      }
+      show: false
     },
     visualMap: {
       show: false,
@@ -72,21 +73,18 @@ const OpsCalendar: React.FC = () => {
     },
     calendar: {
       top: isMobile ? 15 : 25,
-      left: isMobile ? 15 : 30,
-      right: isMobile ? 15 : 30,
-      cellSize: isMobile ? ['auto', 20] : ['auto', 25],
+      left: isMobile ? 10 : 20, 
+      right: isMobile ? 10 : 20,
+      bottom: isMobile ? 15 : 20,
+      cellSize: isMobile ? ['auto', 26] : ['auto', 34],
       range: '2024-04',
       itemStyle: {
+        color: '#ffffff', // Cell background color
         borderWidth: 1,
         borderColor: '#e5e7eb'
       },
       yearLabel: { show: false },
-      dayLabel: {
-        firstDay: 1,
-        nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-        color: '#666',
-        fontSize: isMobile ? 10 : 12
-      },
+      dayLabel: { show: false }, // Hide the day labels (S, M, T, W, etc.)
       monthLabel: {
         show: true,
         color: '#666',
@@ -100,23 +98,50 @@ const OpsCalendar: React.FC = () => {
         }
       }
     },
-    series: [{
-      type: 'scatter',
-      coordinateSystem: 'calendar',
-      symbolSize: function(val: any) {
-        return val[1] === 0 ? 0 : (isMobile ? 9 : 12);
-      },
-      symbol: function(val: any, params: any) {
-        // Different symbols for different statuses
-        switch(params.data[1]) {
-          case 1: return 'triangle'; // Triangle for Deployment
-          case 2: return 'circle'; // Circle for Downtime
-          case 3: return 'rect'; // Square for Unavailability
-          default: return 'circle';
+    series: [
+      // Series for day numbers
+      {
+        type: 'effectScatter', // Different series type to avoid conflicts
+        coordinateSystem: 'calendar',
+        symbolSize: 0, // Completely invisible symbol (changed from 1)
+        data: dateLabels(),
+        zlevel: 1, // Place behind the main series
+        label: {
+          show: true,
+          formatter: function(params: any) {
+            return params.data[1]; // Return the day number
+          },
+          position: 'insideTopLeft',
+          fontSize: isMobile ? 8 : 9,
+          color: '#555',
+          fontWeight: 'bold',
+          offset: [2, 2]
         }
       },
-      data: generateData()
-    }]
+      // Series for the symbols (triangle, circle, square)
+      {
+        type: 'scatter',
+        coordinateSystem: 'calendar',
+        symbolSize: function(val: any) {
+          if (val[1] === 0) return 0; // No symbol for normal days
+          if (isMobile) return 10;
+          if (isSmallScreen) return 11;
+          return 12;
+        },
+        symbol: function(val: any, params: any) {
+          // Different symbols for different statuses
+          switch(params.data[1]) {
+            case 1: return 'triangle'; // Triangle for Deployment
+            case 2: return 'circle'; // Circle for Downtime
+            case 3: return 'rect'; // Square for Unavailability
+            default: return 'none'; // Empty for normal days
+          }
+        },
+        // Remove dots for normal days by not showing them at all
+        data: generateData().filter(item => item[1] !== 0),
+        zlevel: 2 // Place above the date numbers
+      }
+    ]
   };
 
   const getChartHeight = () => {

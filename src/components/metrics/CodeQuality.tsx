@@ -39,28 +39,19 @@ const CodeQuality: React.FC = () => {
         }
       },
       pointer: {
-        icon: 'path://M2.9,0.7L9,6.1L15.1,0.7',
-        length: isMobile ? '50%' : '55%',
-        width: isMobile ? 6 : isLargeScreen ? 10 : 8,
-        offsetCenter: [0, '2%'],
+        length: isMobile ? '60%' : '65%',
+        width: isMobile ? 4 : isLargeScreen ? 6 : 5,
+        offsetCenter: [0, '0%'],
         itemStyle: {
-          color: '#069494',
-          shadowColor: 'rgba(0, 0, 0, 0.3)',
-          shadowBlur: 8,
-          shadowOffsetX: 2,
-          shadowOffsetY: 4
+          color: '#069494'
         }
       },
       anchor: {
         show: true,
-        size: isMobile ? 4 : isLargeScreen ? 6 : 5,
         showAbove: true,
+        size: isMobile ? 6 : isLargeScreen ? 10 : 8,
         itemStyle: {
-          color: '#069494',
-          shadowColor: 'rgba(0, 0, 0, 0.3)',
-          shadowBlur: 8,
-          shadowOffsetX: 2,
-          shadowOffsetY: 4
+          color: '#069494'
         }
       },
       axisTick: {
@@ -95,7 +86,7 @@ const CodeQuality: React.FC = () => {
       },
       detail: {
         fontSize: isMobile ? 24 : isLargeScreen ? 36 : 30,
-        offsetCenter: [0, '0%'],
+        offsetCenter: [0, '30%'],
         valueAnimation: true,
         formatter: function(value: number) {
           return value + '%';
